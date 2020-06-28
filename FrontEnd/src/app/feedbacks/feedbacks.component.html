@@ -1,0 +1,139 @@
+
+<div class="row  "> 
+    
+    <div class="container " >
+          
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <button type="button" style="float: left;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" (click)="LogOut()"  >Log Out</button>
+                <button id="CreatePostBtn" *ngIf="!isPostCreate" (click)="GoToCreatePost()" class="col-md-2 form-control"  style="float: left;border-color: #5a90e0;color:#15f1f1">Create Post</button>
+                <!-- <input type="text"  *ngIf="!isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" placeholder="Search Post" [(ngModel)]="search" (keyup)="loadPostData(0,true,pageSize)"  > -->
+                
+                <button type="button" *ngIf="isCreate" style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control" (click)="isCreate=false;isCommentCreate=false;isPostCreate=false;">Back To List</button>
+                <label id="UserLogged" style="padding-left: 15px;" class="text-info" ><h2>{{loggedUserName==''?'':'Logged by'}} {{loggedUserName}}</h2></label>
+                <input type="text"  #SearchInput    style="float: right;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control"  placeholder="Type post name" />
+
+              </div>
+              <div class="clearfix"></div>
+              <div  class="col-md-12"  *ngIf="Message!==''?true:false">
+                <label id="message" style="padding-left: 60px;float: left;border-color: hsla(36, 89%, 51%, 0.911);color:hsla(36, 89%, 51%, 0.911)" *ngIf="Message!==''?true:false" ><h2>{{Message}}</h2></label>
+                
+              </div>
+              <div class="col-md-12" *ngIf="!isCreate">
+                <table class="table table-xs " >
+                    <tbody>
+                        <tr *ngFor="let post of listPost;let sl = index">
+                            <td style="padding:0px">
+                                <table style="width:100%;" class="table  table-hover">
+                                    <tbody style="padding:3px;">
+                                        <tr style="background-color:#f6f6f6;">
+                                            <th style="text-align:left;width:20%; padding-right:10px !important;color:#15f1f1">{{post.postText}}
+                                                <button id="like" style="float:right" class="btn btn-outline-info" role="button" (click)="GoToCreateComment(post)"> 
+                                                   New Comment
+                                                </button>
+                                            </th>                                
+                                            <th width="10%" style="color:#15f1f1" >{{post.userType}}</th>
+                                            <th width="10%" style="color:#15f1f1">{{post.creationTime==''||post.creationTime==null?'':pagerService.convertToDateString(post.creationTime)}}</th>
+                                            <th width="10%" style="color:#15f1f1">{{post.commentList.length}} Comments</th>
+                                        </tr>
+                                        <tr *ngFor="let item of post.commentList;let sl = index">
+                
+                                            <td style="text-align:left;width:20%; padding-right:10px !important" valign="bottom">
+                                                <span title="Comment">
+                                                    {{item.commentText}}
+                                                </span>
+                                            </td>
+                                            <td style="text-align:left;width:10%; padding-right:10px !important" valign="bottom">
+                                                <span title="User Name" >
+                                                    {{item.userName}}
+                                                </span>
+                                            </td>
+                
+                                            <td style="text-align:left;width:10%; padding-right:10px !important" valign="bottom">
+                                                <span title="Creation Time" >
+                                                    {{item.creationTime==''||item.creationTime==null?'':pagerService.convertToDateString(item.creationTime)}}
+                                                </span>
+                                            </td>
+                                            <td style="text-align:left;width:10%; padding-right:10px !important" valign="bottom">
+                                               <button id="like" type="button" (click)="setOpinion(item,true)"> 
+                                                   {{item.cLike}} <i class="fa fa-thumbs-up text-success " aria-hidden="true"></i>
+                                               </button>
+                                               <button id="disLike" type="button" style="margin-left: 10px;" (click)="setOpinion(item,false)"> 
+                                                   {{item.cDislike}}  <i class="fa fa-thumbs-down text-danger" aria-hidden="true"></i>
+                                            </button>
+                                            </td>
+                
+                
+                                        </tr>
+                                    </tbody>
+                                    <tfoot *ngIf="post.commentList.length===0">
+                                        <tr  style="text-align: center;">
+                                            No Comments found..
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>    
+                    <tfoot *ngIf="listPost.length===0">
+                        <tr>
+                            <th colspan="4" >No Post(s) found..</th>
+                        </tr>
+                    </tfoot>
+                </table>
+              </div>
+                <div class="clearfix"></div>
+               <div class="col-md-12" *ngIf="isCreate">
+                   <div class="container">
+                    <label for="textData"><h3>   {{isPostCreate==true? 'Post:':'Comment'}}</h3></label>
+                    <textarea rows="4" class="form-control" id="textData" name="textData" [(ngModel)]="textData"></textarea>
+                    <br/>
+                    <button type="button" id="createBtn" style="float: left;border-color: #15f1f1;color:#15f1f1" class="col-md-2 form-control"  (click)="isPostCreate==true? createPost():createComment()">Create</button>
+                   
+                   </div>
+                
+               </div>
+            
+        </div>
+            
+            <div class="col-md-12" *ngIf="listPost.length !== 0 && !isCreate">
+                    <div style="float: left;">
+                        <span class="btn c-btn c-btn-grey c-btn-uppercase">
+                            Showing  <span style="color:#15f1f1"><b>{{pageStart}}</b></span>
+                            to <span style="color:#15f1f1"><b>{{pageEnd}}</b></span>
+                            of <span style="color:#15f1f1"><b>{{totalRows}}</b></span>
+                            entries
+                        </span>
+                    </div>
+                    <div style="float: right;">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-secondary" [ngClass]="{disabled:pager.currentPage === 1}" (click)="setPaging(1,true)"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Start</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-info" [ngClass]="{disabled:pager.currentPage === 1}" (click)="setPaging(pager.currentPage - 1,true)"><i class="fa fa-angle-left" aria-hidden="true"></i>Prev</a>
+                            </li>
+                            <li *ngFor="let page of pager.pages">
+                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-secondary" [ngClass]="{active:pager.currentPage === page}" (click)="setPaging(page,true)">{{page}}</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-info" [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="setPaging(pager.currentPage + 1,true)"><i class="fa fa-angle-right" aria-hidden="true"></i>Next</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-secondary" [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="setPaging(pager.totalPages,true)"><i class="fa fa-angle-double-right" aria-hidden="true"></i>End</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                
+           <!-- <div class="col-md-12" >
+            <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+           </div>     
+                    -->
+                
+    </div>
+
+</div>
+
+

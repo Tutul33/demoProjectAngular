@@ -1,0 +1,194 @@
+<!-- <div class="row">  
+    <div class="container">
+        <div class="col-md-12">
+            <div class="col-md-4" *ngIf="islogin">
+                
+                
+                    <div class="container panel">
+                        <div class="col-md-12" style="text-align: justify;" >
+                            <h3>User  Login</h3>
+                        </div>
+                        <div class="col-md-12" style="color: chocolate;" *ngIf="Message==''?false:true">
+                            {{Message}}
+                        </div>
+                        <div class="col-md-12">
+                          <label for="uname"><b>Username: </b></label>
+                        <input type="text" id="UserName" [(ngModel)]="username" placeholder="Enter Username" name="uname" required>
+                        </div> 
+                         <div  class="col-md-12"><label for="psw"><b>Password: </b></label>
+                          <input type="password" id="password" [(ngModel)]="password" placeholder="Enter Password" name="psw" required>
+                        </div>
+                        <div class="col-md-12"><button type="button" id="loginBtn" (click)="UserAuthentication()">Login</button>
+                        <button type="button" id="goToUserCreate" style="margin-left: 8px;" (click)="islogin=false">Create New User</button></div> 
+                      
+                    </div>
+                
+                    
+              
+            </div>
+            <div class="col-md-4" *ngIf="!islogin">
+              
+                <div class="container panel">
+                      <div class="col-md-12" style="text-align: justify;" >
+                        <h3>User  Creation</h3>
+                    </div>
+                    <div class="col-md-12" style="color: chocolate;" *ngIf="Message==''?false:true">
+                        {{Message}}
+                    </div>
+                 <div class="col-md-12">
+                        <label for="uname"><b>Username: </b></label>
+                      <input type="text" id="UserName" [(ngModel)]="username" placeholder="Enter Username" name="uname" required>
+                  </div>
+                  <div  class="col-md-12"><label for="psw"><b>Password: </b></label>
+                        <input type="password" id="password" [(ngModel)]="password" placeholder="Enter Password" name="psw" required>
+                   </div>
+                   <div class="col-md-12">
+                       <button type="button" id="loginBtn" (click)="UserCreate()">Create</button>
+                       <button type="button" id="goToLogin" style="margin-left: 8px;" (click)="islogin=true">Back to login</button>
+                    </div> 
+                    
+                  </div>
+            </div>
+
+        </div>
+    </div>
+</div> -->
+  
+
+
+<div class="limiter" *ngIf="islogin" >
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Account Login
+                </span>
+                <span class="login100-form-title p-b-33 fo text-warning"  *ngIf="Message==''?false:true">
+                    <h5>{{Message}}</h5>
+                </span>
+                <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                    <input class="input100" type="text" [(ngModel)]="username" name="email" placeholder="Email">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+
+                <div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
+                    <input class="input100" type="password" [(ngModel)]="password" name="pass" placeholder="Password">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+
+                <div class="container-login100-form-btn m-t-20">
+                    <button class="login100-form-btn" (click)="UserAuthentication()">
+                        Sign in
+                    </button>
+                </div>
+
+                <div class="text-center p-t-45 p-b-4">
+                    <span class="txt1">
+                        Forgot
+                    </span>
+
+                    <a href="#" class="txt2 hov1">
+                        Username / Password?
+                    </a>
+                </div>
+
+                <div class="text-center">
+                    <span class="txt1">
+                        Create an account?
+                    </span>
+
+                    <a href="javascript:void(0);" (click)="islogin=false" class="txt2 hov1">
+                        Sign up
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="limiter" *ngIf="!islogin" >
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Sign Up
+                </span>
+                <span class="login100-form-title p-b-33 fo text-warning"  *ngIf="Message==''?false:true">
+                    <h5>{{Message}}</h5>
+                </span>
+                <div class="wrap-input100 validate-input" >
+                    <input class="input34 col-md-12" type="text" [(ngModel)]="UserModel.firstName" name="firstName" placeholder="First Name">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+                <div class="wrap-input100 validate-input" >
+                    <input class="input34 col-md-12" type="text" [(ngModel)]="UserModel.lastName" name="lastName" placeholder="Last Name">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+
+                <div class="wrap-input100 rs1 validate-input" >
+                    <input class="input34 col-md-12" type="password" [(ngModel)]="UserModel.password" name="password" placeholder="Password">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+                <!-- <div class="wrap-input100 rs1 validate-input" >
+                    <input class="input34 col-md-12" type="text" [(ngModel)]="UserModel.userName" name="userName" placeholder="User Name">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div> -->
+                <div class="wrap-input100 rs1 validate-input" >
+                    <input class="input34 col-md-12" type="text" [(ngModel)]="UserModel.email" name="email" (keyup)="ValidateEmail()" placeholder="Email">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+                <div class="wrap-input100 rs1 validate-input" >
+                    <input class="input34 col-md-12" type="text" [(ngModel)]="UserModel.countryCode" name="countryCode" placeholder="Country Code">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+                <div class="wrap-input100 rs1 validate-input" >
+                    <input class="input34 col-md-12" type="text" [(ngModel)]="UserModel.phone" name="phone" placeholder="Phone">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+                <div class="wrap-input100 rs1 validate-input" >
+                    <input class="input34 col-md-12" type="date"  [(ngModel)]="UserModel.birthDate" name="birthDate" placeholder="Birth Date">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+                <div class="wrap-input100 rs1 validate-input" >
+                    <input class="input34 col-md-12" type="text" [(ngModel)]="UserModel.address" name="address" placeholder="Address">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+                <div class="container-login100-form-btn m-t-20">
+                    <button class="login100-form-btn" (click)="UserCreate()">
+                        SUBMIT
+                    </button>
+                </div>
+
+                <!-- <div class="text-center p-t-45 p-b-4">
+                    <span class="txt1">
+                        Forgot
+                    </span>
+
+                    <a href="#" class="txt2 hov1">
+                        Username / Password?
+                    </a>
+                </div>
+
+                <div class="text-center">
+                    <span class="txt1">
+                        Create an account?
+                    </span>
+
+                    <a href="javascript:void(0);" (click)="" class="txt2 hov1">
+                        Sign up
+                    </a>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
