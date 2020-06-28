@@ -1,5 +1,7 @@
-# Demo Project of Angular Frontend and ASP.NET CORE WEB API Backend
+# Demo Project of Angular Frontend and ASP.NET CORE WEB API Backend.
 # It is basically a demo project of feedback post and comment.
+# Demo User
+  (Username:demo@gmail.com / User1) and Password:12345  
 # Frontend
   Frontend is developed with angular framework. It has angular service which consumes REST APIs. 
 # Backend
